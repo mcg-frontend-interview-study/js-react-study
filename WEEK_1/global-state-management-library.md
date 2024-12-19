@@ -67,7 +67,7 @@ Flux 패턴의 특징
 - Flux 패턴을 구현하기 위한 라이브러리.
 - 하나의 `Store` (저장 공간)을 사용하여 모든 상태를 관리하는 특징이 있습니다.
 - 보일러 플레이트를 줄이기 위해 Redux toolkit과 함께 사용합니다.
-- 비동기 작업을 처리하기 위해서 `reudx-thunk` 나 `redux-saga` 와 같은 Middleware 사용이 필요합니다.
+- 비동기 작업을 처리하기 위해서 `redux-thunk` 나 `redux-saga` 와 같은 Middleware 사용이 필요합니다.
 
 2. Zustand
 
@@ -183,7 +183,7 @@ obj.print();
 
 1. MobX
 
-- `Java` 의 Annotation과 유사한 `Decorator` 를 제공하고 `Class` 를 객체지향적으로 사용하고 있기 때문에 `Spring` 프레임워크와 유사한 아키텍쳐 구조를 갖고 있습니다. 따라서 서버 개발에 익숙한 개발자 분들은 친숙함을 느끼실 수도 있습니다.
+- `Spring` 의 Annotation과 유사한 `Decorator` 를 제공하고 `Class` 를 객체지향적으로 사용하고 있기 때문에 `Spring` 프레임워크와 유사한 아키텍쳐 구조를 갖고 있습니다. 따라서 서버 개발에 익숙한 개발자 분들은 친숙함을 느끼실 수도 있습니다.
 - 상태를 관찰 가능하게 (`Observable`) 지정하여 상태 변경을 자동으로 감지합니다.
 
   ```jsx
