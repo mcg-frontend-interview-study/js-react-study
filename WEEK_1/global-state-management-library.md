@@ -185,6 +185,7 @@ obj.print();
 
 - `Java` 의 Annotation과 유사한 `Decorator` 를 제공하고 `Class` 를 객체지향적으로 사용하고 있기 때문에 `Spring` 프레임워크와 유사한 아키텍쳐 구조를 갖고 있습니다. 따라서 서버 개발에 익숙한 개발자 분들은 친숙함을 느끼실 수도 있습니다.
 - 상태를 관찰 가능하게 (`Observable`) 지정하여 상태 변경을 자동으로 감지합니다.
+
   ```jsx
   // MobX Store
 
@@ -204,3 +205,17 @@ obj.print();
 - `proxy` , `snapshot` , `useSnapshot` 만으로 상태를 관리합니다.
   - snapshot : proxy 객체를 복사하여 읽기 전용 불변 객체를 생성. 원본과는 독립적으로 동작합니다.
   - useSnapshot : 상태를 구독하고, 상태 변경 시 컴포넌트가 자동으로 리렌더 되도록 합니다.
+
+### 참고 자료
+
+[Redux-보일러플레이트 줄이기](https://ko.redux.js.org/usage/reducing-boilerplate/)
+
+[Zustand](https://zustand.docs.pmnd.rs/getting-started/comparison)
+
+[상태관리 패턴에 따른 상태관리 라이브러리 분석하기](https://velog.io/@buddle6091/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%ED%8C%A8%ED%84%B4%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%B6%84%EC%84%9D%ED%95%98%EA%B8%B0)
+
+[MobX](https://ko.mobx.js.org/README.html)
+
+[React에서 Mobx 경험기 (Redux와 비교기)](https://techblog.woowahan.com/2599/)
+
+[💠 프록시(Proxy) 패턴 - 완벽 마스터하기](https://inpa.tistory.com/entry/GOF-%F0%9F%92%A0-%ED%94%84%EB%A1%9D%EC%8B%9CProxy-%ED%8C%A8%ED%84%B4-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EB%B0%B0%EC%9B%8C%EB%B3%B4%EC%9E%90)
