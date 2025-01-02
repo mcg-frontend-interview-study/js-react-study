@@ -322,7 +322,10 @@ func.bind(thisArg)(argsArray)
 
   인자를 배열로 넘겨주는 것이 아닌, 개별 인자 값으로 넘겨줍니다.
 
+<br/>
+
 - bind
+
   apply와 call과는 다르게, 함수를 직접 실행시켜주어야 합니다.
 
   ```jsx
@@ -387,7 +390,7 @@ const hi = {
   hello: function () {
     console.log(this.value); // 1번
     function foo() {
-      console.log('내부 함수', this.value); // 2번
+      console.log(this.value); // 2번
     }
     foo();
   },
@@ -404,6 +407,39 @@ hi.hello();
 1번 : 100
 
 2번 : 10
+
+</div>
+</details>
+<br/><br/>
+1-1. 아래 코드의 출력 결과는?
+
+```jsx
+var value = 10;
+
+const hi = {
+  value: 100,
+  hello: function () {
+    console.log(this.value); // 1번
+    const foo = () => {
+      console.log(this.value); // 2번
+    }
+    foo();
+  },
+};
+
+hi.hello();
+```
+
+<details>
+<summary>
+정답
+</summary>
+<div markdown="1">
+1번 : 100
+
+2번 : 100
+
+화살표 함수는 this를 가지고 있지 않아 상위 스코프인 hello 메서드의 this를 따릅니다.
 
 </div>
 </details>
@@ -511,12 +547,12 @@ var value = 10;
 const hi = {
   value: 100,
   hello: function () {
-    console.log(this.value); // 1번
+    console.log('1번 ', this.value); // 1번
     function foo() {
-      console.log(this.value); // 2번
+      console.log('2번 ', this.value); // 2번
     }
     setTimeout(function () {
-      console.log(this.value); // 3번
+      console.log('3번 ', this.value); // 3번
     }, 0);
     foo();
   },
@@ -530,13 +566,11 @@ hi.hello();
 정답
 </summary>
 <div markdown="1">
-  1번, 100
+  1번 100
   
-  2번, 10
+  2번 10
   
-  3번, 10
-  
-  setTimeout의 콜백 함수는 매크로 태스크 큐에 들어가 나중에 실행됩니다.
+  3번 10
 </div>
 </details>
 
