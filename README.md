@@ -15,3 +15,10 @@
 ## Week 2
 
 - [상황에 따라 달라지는 this](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/this.md)
+
+- [React Context의 내부 동작 원리: 값 변경 시 하위 컴포넌트 리렌더링에 대해
+  ](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/react-context-work-internally.md)
+
+- [useRef](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/useRef.md)
+
+- [메모리로 살펴보는 원시 타입과 참조 타입의 차이](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/primitive-and-reference-type-with-memoy.md)
