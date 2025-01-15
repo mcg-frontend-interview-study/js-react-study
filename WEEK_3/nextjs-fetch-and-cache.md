@@ -12,9 +12,15 @@ Next.js는 Node.js를 기반으로 서버 사이드 렌더링을 지원해주는
 
 사용자가 브라우저로 주소를 입력하면 정적 파일 저장소(ex: S3)에 index.html을 요청하게 됩니다. 그 후 index.html을 받은 브라우저는 이를 파싱하며 script tag를 만나서 React 실행에 필요한 script를 다운로드 받으면 React가 실행됩니다. React가 실행되어 필요한 화면을 먼저 렌더링 후 fetch 함수를 만나면 백엔드 서버로 화면에 필요한 데이터를 요청하게 되고 백엔드 서버는 이를 json 형태로 반환하여 브라우저는 이 값을 채워 사용자에게 화면을 보여주게 됩니다.
 
+![image](https://github.com/user-attachments/assets/8ad77b23-b42d-4de6-a9e8-23d8fed54958)
+
+
 이제 Next의 SSR 동작방식에 대해 설명하겠습니다.
 
 Next는 브라우저 요청 전에 React를 사전 빌드하여 서비스에 필요한 페이지들을 미리 준비해둡니다. 그리고 사용자가 브라우저로 주소를 입력하면, Node 서버에 페이지 요청을 하게 됩니다. 그 때 Node 서버는 fetch를 실행하여 백엔드 서버에게 필요한 데이터를 요청하게 됩니다. 응답을 받은 Node 서버는 데이터를 페이지에 채워넣어 html을 완성하고 이를 브라우저에게 응답합니다.
+
+![image](https://github.com/user-attachments/assets/a527b44d-029f-478f-b745-67da57ce190a)
+
 
 두 개의 동작방식을 비교하며 비교할 수 있는 것은 같은 fetch 함수이지만 **React CSR 환경에서는 브라우저**가 실행하고 **Next SSR 환경에서는 서버**가 실행한다는 것입니다.
 
@@ -51,17 +57,23 @@ fetch(`https://...`, { next: { revalidate: false | 0 | number } });
 이는 SSG(Static Site Generation) 렌더링 방식과 연관이 있습니다.
 SSG 방식은 사전 빌드 단계에서 백엔드 서버에 데이터를 요청하고 완성된 html을 만들어두게 됩니다. 그 후 브라우저가 페이지 요청을 하면 미리 만들어 둔 정적인 html을 응답하게 됩니다.
 
+![image](https://github.com/user-attachments/assets/23229baf-313b-44cc-8ade-f0057c2fee54)
+
+
 #### 2. revalidate: 0과 SSR
 
 이 경우 캐시 데이터를 사용하지 않는다는 의미입니다. 캐시를 사용하지 않고 매 번 요청마다 새로 백엔드 서버로 요청을 보내게 됩니다. 변경이 잦고 사용자가 항상 최신 데이터를 바라봐야 할 때 사용하면 좋습니다.
 
-이는 SSR(Server Side Rendering) 렌더링 방식과 연관있으며 브러우저로부터 요청이 있을 때마다 백엔드 서버로 요청하여 값을 채운 후 html을 응답하게 됩니다.
+이는 SSR(Server Side Rendering) 렌더링 방식과 연관있으며 브러우저로부터 요청이 있을 때마다 백엔드 서버로 요청하여 값을 채운 후 html을 응답하게 됩니다. 그림은 초반에 설명한 Next.js의 SSR 렌더링 방식과 동일하여 생략합니다.
 
 #### 3. revalidate: number와 ISR
 
 이 경우 캐시 데이터의 유효시간을 설정한다는 의미입니다. 캐시 데이터의 유효시간 내에 같은 요청이 오면 캐시 데이터를 사용하고 유효시간이 지나면 백엔드 서버로 새로운 데이터를 요청하게 됩니다. 여기서 유의할 점은 유효시간이 지난 후 브라우저의 요청이 올 때 백엔드 서버로 새로운 데이터를 요청하는 것이 아니라, 백그라운드로 Node 서버가 알아서 요청한다는 것입니다. 그래서 유효시간이 지났다고 해서 항상 최신화 된 데이터를 불러온다고 보장할 수는 없습니다.
 
 이는 ISR(Incremental Static Regeneration) 렌더링 방식과 연관이 있습니다. SSG와 유사하게 사전 빌드 때 백엔드 서버로 데이터를 요청하여 미리 완성된 html을 생성하지만 이 html의 유효시간은 revalidate에 설정한 시간입니다. 이 시간 내에는 미리 만들어둔 html을 반환하지만 유효시간이 지난 경우 백그라운드에서 백엔드 서버로 새로운 데이터를 요청한 후 다시 html을 만듭니다. 만든 시점 후의 브라우저 요청부터 새로운 html을 응답하게 됩니다.
+
+![image](https://github.com/user-attachments/assets/ca71a14a-9c0c-4ca3-9921-8ec47cf59855)
+
 
 ### 1.3 ISR 렌더링 전략에서 캐시 무효화 (tags option과 revalidateTag)
 
@@ -70,6 +82,7 @@ ISR 렌더링 방식은 유효시간을 토대로 새로운 html을 만들어야
 이 때 tags option을 사용하면 이를 쉽게 대처할 수 있습니다. 먼저 fetch requestInit option으로 유일한 태그를 설정한 후, post, put, delete, patch의 요청이 일어났을 때 revalidateTag 메서드를 사용해서 특정 태그를 무효화시키면 유효시간과 관계없이 해당 캐시 데이터를 무효화합니다. 그리고 다음 fetch get 요청이 왔을 때 서버는 백엔드 서버로 데이터를 요청하여 새로운 html을 만들어 응답하게 됩니다.
 
 여기까지 설명을 들었을 때 "엇 TanStack-Query의 queryKey, invalidateQueries와 똑같은 것 아니야?"라는 의문이 들며 Next.js의 fetch와 TanStack-Query는 동일한 기능을 제공하니깐 Next.js에서는 TanStack-Query가 필요하지 않다는 생각이 들 수 있습니다. (저도 똑같은 생각을 했구요ㅋㅋㅋ) 그래서 다음 주제로 이 둘의 근본적인 차이점에 대해서 설명해보려고 합니다.
+
 
 ## 2. TanStack-Query 캐시 관리의 차이점
 
@@ -100,3 +113,7 @@ TanStack-Query는 브라우저에서 동작하는 라이브러리입니다. 그�
 hydration이 일어난 후 클라이언트 컴포넌트에서 값을 사용할 때 api 요청 시간과 호출 횟수를 줄일 수 있다는 장점을 얻을 수 있다.
 
 Next.js의 fetch와 TanStack-Query의 cache는 대체재가 아니라 보완재라는 것을 인지하여 둘을 적절하게 잘 이용하면 사용자 경험을 높이는데 도움을 줄 수 있을 것이라 생각합니다.
+
+# 참고문헌
+[Next.js fetch 공식문서](https://nextjs.org/docs/app/api-reference/functions/fetch#fetchurl-options)
+[TanStack-Query 공식 문서](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#full-nextjs-pages-router-example)
