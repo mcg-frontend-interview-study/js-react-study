@@ -22,3 +22,10 @@
 - [useRef](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/useRef.md)
 
 - [메모리로 살펴보는 원시 타입과 참조 타입의 차이](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_2/primitive-and-reference-type-with-memoy.md)
+
+
+## Week 3
+
+- [Zustand VS. Jotai](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_3/zustand-and-jotai/zustand-and-jotai.md)
+
+- [Next.js의 fetch와 데이터 렌더링 방식(SSR, SSG, ISR)과 TanStack-Query 캐시 관리의 차이점](https://github.com/mcg-frontend-interview-study/js-react-study/blob/main/WEEK_3/nextjs-fetch-and-cache.md)
